@@ -6,24 +6,24 @@ on:
     pull_request:
 
 jobs:
-  # 检查
-  check:
-    name: check
-    runs-on: ubuntu-latest
-    steps:
-      # 获取代码仓库
-      - uses: actions/checkout@v2
-
-      # 安装Go环境
-      - name: set up go
-      - uses: actions/setup-go@v2
-        with:
-        go-version:'^1.13.1'
-
-      # vet 静态检测
-      - name: vet
-        run: |
-          go vet ./...
+#  # 检查
+#  check:
+#    name: check
+#    runs-on: ubuntu-latest
+#    steps:
+#      # 获取代码仓库
+#      - uses: actions/checkout@v2
+#
+#      # 安装Go环境
+#      - name: set up go
+#      - uses: actions/setup-go@v2
+#        with:
+#        go-version:'^1.13.1'
+#
+#      # vet 静态检测
+#      - name: vet
+#        run: |
+#          go vet ./...
 
 
   build:
@@ -34,6 +34,7 @@ jobs:
       - name: docker build
         run: |
           # 编译并推送至阿里云
+          # todo 现在只有一个版本的镜像，无法回滚；考虑在release分支做多版本镜像用于回滚
           docker login --username=${{ aliyun_registry_user }} --password=${{ aliyun_registry_pw }} registry.cn-hangzhou.aliyuncs.com
           docker build -t ${{ aliyun_registry }}:preview .
           docker push ${{ aliyun_registry }}:preview
