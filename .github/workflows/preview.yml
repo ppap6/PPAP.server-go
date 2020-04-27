@@ -50,7 +50,7 @@ jobs:
       - name: update_server
         run: |
           SSH_PATH="$HOME/.ssh"
-          mkdir -p SSH_PATH
-          echo -e ${{ secrets.aliyun_key }} > SSH_PATH
-          chmod 600 ~/.ssh/id_rsa
+          mkdir -p $SSH_PATH
+          echo -e ${{ secrets.aliyun_key }} > "$SSH_PATH/id_rsa"
+          chmod 600 "$SSH_PATH/id_rsa"
           ssh dev@${{ secrets.aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-previe && docker-compose up -d"
