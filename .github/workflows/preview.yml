@@ -31,6 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     # needs: [check]   # 先允许check失败，因为不知道github action的失败判定逻辑
     steps:
+       # 获取代码仓库
+      - uses: actions/checkout@v2
+
       - name: docker build
         run: |
           # 编译并推送至阿里云
@@ -42,6 +45,7 @@ jobs:
   deply:
     name: deploy
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: update_server
         run: |
