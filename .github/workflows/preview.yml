@@ -55,4 +55,6 @@ jobs:
           mkdir -p $SSH_PATH
           echo -e "$SSH_TOKEN" > "$SSH_PATH/id_rsa"
           chmod 600 "$SSH_PATH/id_rsa"
+          chmod 600 "$SSH_PATH/known_hosts"
+          ssh-keyscan -t rsa ${{ secrets.aliyun_server_addr}} >> "$SSH_PATH/known_hosts"
           ssh dev@${{ secrets.aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-previe && docker-compose up -d"
