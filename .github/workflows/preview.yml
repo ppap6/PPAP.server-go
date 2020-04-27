@@ -1,0 +1,50 @@
+name: preview
+on:
+  push:
+    branches:
+      - master
+    pull_request:
+
+jobs:
+  # 检查
+  check:
+    name: check
+    runs-on: ubuntu-latest
+    steps:
+      # 获取代码仓库
+      - uses: actions/checkout@v2
+
+      # 安装Go环境
+      - name: set up go
+      - uses: actions/setup-go@v2
+        with:
+        go-version:'^1.13.1'
+
+      # vet 静态检测
+      - name: vet
+        run: |
+          go vet ./...
+
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    # needs: [check]   # 先允许check失败，因为不知道github action的失败判定逻辑
+    steps:
+      - name: docker build
+        run: |
+          # 编译并推送至阿里云
+          docker login --username=${{ aliyun_registry_user }} --password=${{ aliyun_registry_pw }} registry.cn-hangzhou.aliyuncs.com
+          docker build -t ${{ aliyun_registry }}:preview .
+          docker push ${{ aliyun_registry }}:preview
+
+  deply:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: update_server
+        run: |
+          mkdir -p ~/.ssh
+          echo -e ${{ aliyun_key }} ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh dev@${{ aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-previe && docker-compose up -d"
