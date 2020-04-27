@@ -35,9 +35,9 @@ jobs:
         run: |
           # 编译并推送至阿里云
           # todo 现在只有一个版本的镜像，无法回滚；考虑在release分支做多版本镜像用于回滚
-          docker login --username=${{ aliyun_registry_user }} --password=${{ aliyun_registry_pw }} registry.cn-hangzhou.aliyuncs.com
-          docker build -t ${{ aliyun_registry }}:preview .
-          docker push ${{ aliyun_registry }}:preview
+          docker login --username=${{ secrets.aliyun_registry_user }} --password=${{ secrets.aliyun_registry_pw }} registry.cn-hangzhou.aliyuncs.com
+          docker build -t ${{ secrets.aliyun_registry }}:preview .
+          docker push ${{ secrets.aliyun_registry }}:preview
 
   deply:
     name: deploy
@@ -46,6 +46,6 @@ jobs:
       - name: update_server
         run: |
           mkdir -p ~/.ssh
-          echo -e ${{ aliyun_key }} ~/.ssh/id_rsa
+          echo -e ${{ secrets.aliyun_key }} ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh dev@${{ aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-previe && docker-compose up -d"
+          ssh dev@${{ secrets.aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-previe && docker-compose up -d"
