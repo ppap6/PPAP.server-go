@@ -1,7 +1,7 @@
 version: '2'
 services:
   app:
-    image: registry-vpc.cn-hangzhou.aliyuncs.com/ppap6/server-go:preview
+    image: registry.cn-hangzhou.aliyuncs.com/ppap6/server-go:preview
     ports:
       - "8080:8080"
     restart: always
