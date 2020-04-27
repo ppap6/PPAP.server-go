@@ -53,6 +53,7 @@ jobs:
         run: |
           SSH_PATH="$HOME/.ssh"
           mkdir -p $SSH_PATH
+          touch "$SSH_PATH/known_hosts"
           echo -e "$SSH_TOKEN" > "$SSH_PATH/id_rsa"
           chmod 600 "$SSH_PATH/id_rsa"
           chmod 600 "$SSH_PATH/known_hosts"
