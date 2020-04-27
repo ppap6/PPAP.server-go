@@ -46,11 +46,13 @@ jobs:
     name: deploy
     runs-on: ubuntu-latest
     needs: build
+    env:
+      SSH_TOKEN: ${{ secrets.aliyun_key }}
     steps:
       - name: update_server
         run: |
           SSH_PATH="$HOME/.ssh"
           mkdir -p $SSH_PATH
-          echo -e ${{ secrets.aliyun_key }} > "$SSH_PATH/id_rsa"
+          echo -e "SSH_TOKEN" > "$SSH_PATH/id_rsa"
           chmod 600 "$SSH_PATH/id_rsa"
           ssh dev@${{ secrets.aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-previe && docker-compose up -d"
