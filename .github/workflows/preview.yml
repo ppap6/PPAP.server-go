@@ -58,4 +58,4 @@ jobs:
           chmod 600 "$SSH_PATH/id_rsa"
           chmod 600 "$SSH_PATH/known_hosts"
           ssh-keyscan -t rsa ${{ secrets.aliyun_server_addr}} >> "$SSH_PATH/known_hosts"
-          ssh dev@${{ secrets.aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-previe && docker-compose up -d"
+          ssh dev@${{ secrets.aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-preview && docker-compose up -d"
