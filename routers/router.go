@@ -10,6 +10,9 @@ func InitRouter() *gin.Engine{
 	engine.GET("ping", func(c *gin.Context) {
 		c.JSON(200, "pong")
 	})
+	engine.GET("pong", func(c *gin.Context) {
+		c.JSON(200, "ping")
+	})
 
 	return engine
 }
