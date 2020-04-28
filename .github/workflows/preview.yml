@@ -58,4 +58,4 @@ jobs:
           chmod 600 "$SSH_PATH/id_rsa"
           chmod 600 "$SSH_PATH/known_hosts"
           ssh-keyscan -t rsa ${{ secrets.aliyun_server_addr}} >> "$SSH_PATH/known_hosts"
-          ssh dev@${{ secrets.aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-preview && docker login --username=${{ secrets.aliyun_registry_user }} --password=${{ secrets.aliyun_registry_pw }} registry.cn-hangzhou.aliyuncs.com && docker pull ${{ secrets.aliyun_registry }}:preview && docker-compose up -d"
+          ssh dev@${{ secrets.aliyun_server_addr}} "cd /home/dev/vhost/ppap-go-preview && docker login --username=${{ secrets.aliyun_registry_user }} --password=${{ secrets.aliyun_registry_pw }} registry.cn-hangzhou.aliyuncs.com && docker-compose pull && docker-compose up -d"
