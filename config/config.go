@@ -16,7 +16,6 @@ func Setup(cfgPath string) {
 		panic(fmt.Sprintf("no such config: %s", cfgPath))
 	}
 	CFG = cfg
-	fmt.Println("init config success.")
 
 }
 

@@ -5,6 +5,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	cfg "ppap/backup/go/config"
+	"ppap/backup/go/logger"
 )
 
 var DB *sqlx.DB
@@ -26,5 +27,5 @@ func Setup() {
 	}
 
 	DB = db
-	fmt.Println("init db success")
+	logger.Info(nil, "init db success")
 }
