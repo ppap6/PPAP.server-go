@@ -4,4 +4,6 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/ppap6/server-go:preview
     ports:
       - "8080:8080"
+    volumes:
+      - ./config.ini:/root.config.ini
     restart: always
